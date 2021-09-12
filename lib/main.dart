@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -51,7 +53,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String? scanResult;
-  int _counter = 0;
+  String? counter;
+  String? foodName;
 
   void _incrementCounter() {
     setState(() {
@@ -60,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+      //_counter++;
     });
   }
 
@@ -104,8 +107,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 : 'Scan result = $scanResult',
             ),
             Text(
-              '$_counter',
+              //'$_counter',
+              counter == null
+                  ? 'Nothing'
+                  : 'Scan result = $counter',
               style: Theme.of(context).textTheme.headline4,
+            ),
+            Text(
+              foodName == null
+                  ? 'No food yet'
+                  : 'Food Name = $foodName',
             ),
             FlatButton(
               onPressed: () {
@@ -153,11 +164,25 @@ class _MyHomePageState extends State<MyHomePage> {
     };
     var query = params.entries.map((p) => '${p.key}=${p.value}').join('&');
 
-    var data = '{"query":"011210009301"}';
+    var data = '{"query":"${scanResult}"}';
 
     var res = await http.post(Uri.parse('https://api.nal.usda.gov/fdc/v1/foods/search?$query'), headers: headers, body: data);
     if (res.statusCode != 200) throw Exception('http.post error: statusCode= ${res.statusCode}');
-    print(res.body);
+    //print(res.body);
+    var jsonData = res.body;
+    var test = json.decode(jsonData);
+    //counter = test['nutrientNumber'];
+    print(test["foods"][0]["foodNutrients"][3]["value"]);
+    counter = test["foods"][0]["foodNutrients"][3]["value"].toString();
+    foodName = test["foods"][0]["description"];
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      //_counter++;
+    });
   }
 }
 
