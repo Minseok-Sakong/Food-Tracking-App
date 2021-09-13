@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Food Tracker'),
     );
   }
 }
@@ -103,24 +103,24 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               scanResult == null
-                ? 'Scan code'
-                : 'Scan result = $scanResult',
+                ? 'Scan a barcode'
+                : 'FDC ID = $scanResult',
             ),
             Text(
               //'$_counter',
               counter == null
-                  ? 'Nothing'
-                  : 'Scan result = $counter',
-              style: Theme.of(context).textTheme.headline4,
+                  ? ' '
+                  : 'Food Name = $foodName',
+              //style: Theme.of(context).textTheme.headline4,
             ),
             Text(
               foodName == null
-                  ? 'No food yet'
-                  : 'Food Name = $foodName',
+                  ? ' '
+                  : 'Calories = $counter',
             ),
             FlatButton(
               onPressed: () {
-                fetchnutri();
+                //fetchnutri();
               },
               child: Text(
                 "Get"
@@ -152,6 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (!mounted) return;
 
     setState(() => this.scanResult = scanResult);
+    fetchnutri();
   }
   void fetchnutri() async {
     var headers = {
