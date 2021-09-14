@@ -4,9 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
+import 'package:numberpicker/numberpicker.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -56,16 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? counter;
   String? foodName;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      //_counter++;
-    });
-  }
+  final fireStorage = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -119,9 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   : 'Calories = $counter',
             ),
             FlatButton(
-              onPressed: () {
-                //fetchnutri();
-              },
+              onPressed: updateData,
               child: Text(
                 "Get"
               ),
@@ -183,6 +180,24 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       //_counter++;
+    });
+  }
+  Future<void> updateData() async {
+    fireStorage.collection("ec463").add(
+        {
+          "Product" : "$foodName",
+          "Calories" : "$counter kcal",
+          "Barcode Number" : "$scanResult"
+        }).then((value){
+      print(value.id);
+    });
+  }
+
+  Future<void> getList() async {
+    fireStorage.collection("ec463").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        print(result.data());
+      });
     });
   }
 }
