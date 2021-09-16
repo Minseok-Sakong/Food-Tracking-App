@@ -39,6 +39,7 @@ dependencies:
   shared_preferences: ^0.5.3+4
   logger: ^0.7.0+2
   google_sign_in: ^5.1.0
+  font_awesome_flutter: ^9.1.0
 
 dev_dependencies:
   flutter_test:
