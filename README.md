@@ -10,7 +10,7 @@
 - Store and manage data under Google Firebase
 - Follow agile software development throughout the duration of the project
 
-## Design
+## DESIGN
 ### Front End
 
 - User is prompted with a login screen that uses Gmail authentication to store data in their respective account
@@ -24,7 +24,7 @@
 - The cURL command returns the information and is stored in an object which is then added to that users database
 - The item is also added to a recipe if the user decides to do so
 
-## Testing and Results
+## TESTING AND RESULTS
 
 ### Barcode Scanner
 
