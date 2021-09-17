@@ -39,7 +39,7 @@ class Scan extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: ScanPage(title: 'Food Tracker'),
+      home: ScanPage(title: 'My Recipe Pal'),
     );
   }
 }
