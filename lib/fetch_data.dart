@@ -35,7 +35,7 @@ class _fetchDataState extends State<fetchData> {
         controller: recipeName,
         decoration:  InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'Enter a recipe name',
+          hintText: 'Enter a recipe name or dailyfoodintake',
           suffixIcon: IconButton(
             icon: Icon(Icons.add_reaction_rounded),
             onPressed:() {
