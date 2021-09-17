@@ -26,6 +26,28 @@
 
 ## Testing and Results
 
+### Barcode Scanner
+
+- The first test was to try out the barcode scanner 
+- To do this, we loaded the application onto our Android phone and used its camera to scan a Gatorade bottle
+- The application successfully recognized the barcode and save its number as a string
+
+### API Calls from the Application
+
+- Once we had the barcode number saved as a string, our next test was to load it into our query object and execute a cURL command
+- The API returned the information requested 
+
+### Firebase Storage
+
+- Our next test was sending the acquired data to firebase and saving it within a user's collection
+- The result was that once we pressed the button "Get", the item's information is sent to firebase
+- Additionally, the data can be sent back upon request, for example when the user taps the "List Ingredients" button
+
+### Gmail Account Login
+
+- Through the creation of multiple pages, the Google account Login was implemented
+- The result is that a user can now log in, access their respective data stored in their fire storage, and log out
+
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
