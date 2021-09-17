@@ -125,7 +125,7 @@ class _ScanPageState extends State<ScanPage> {
               controller: recipeName,
             decoration:  InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter a recipe name & dailyfoodintake',
+                hintText: 'Enter a recipe name or dailyfoodintake',
               suffixIcon: IconButton(
                 icon: Icon(Icons.add_reaction_rounded),
                 onPressed:() {
@@ -164,7 +164,7 @@ class _ScanPageState extends State<ScanPage> {
               controller: serving,
               decoration:  InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Scan & Enter serving & press happy face',
+                hintText: 'Scan & Enter Servings',
                 suffixIcon: IconButton(
                   icon: Icon(Icons.add_reaction_rounded),
                   onPressed:() {
