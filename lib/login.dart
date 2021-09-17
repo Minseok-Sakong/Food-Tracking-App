@@ -16,7 +16,6 @@ class _loginState extends State<login> {
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    setState(() => isloggedIn = true);
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
@@ -27,6 +26,7 @@ class _loginState extends State<login> {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+    setState(() => isloggedIn = true);
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
 
@@ -48,16 +48,19 @@ class _loginState extends State<login> {
               isloggedIn == false
                   ? 'Please google log-in'
                   : 'You are now logged in!',
+              style: Theme.of(context).textTheme.headline6,
             ),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 onPrimary: Colors.black,
-                minimumSize: Size(double.infinity, 50),
+                //minimumSize: Size(double.infinity, 50),
               ),
               icon: FaIcon(FontAwesomeIcons.google, color:Colors.red),
               label: Text('Sign Up with Google'),
-              onPressed: signInWithGoogle,
+              onPressed: !isloggedIn ?
+              signInWithGoogle
+                  :null
             ),
             // FlatButton(
             //   color: Colors.grey.withOpacity(0.3),
