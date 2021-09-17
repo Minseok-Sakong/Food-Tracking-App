@@ -11,6 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'fetch_data.dart';
+
 
 
 void main() async{
@@ -24,7 +26,7 @@ class Scan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'My Recipe Pal',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -35,9 +37,9 @@ class Scan extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blue,
       ),
-      home: ScanPage(title: 'Food Tracker'),
+      home: ScanPage(title: 'My Recipe Pal'),
     );
   }
 }
@@ -65,8 +67,13 @@ class _ScanPageState extends State<ScanPage> {
   String? counter;
   String? foodName;
   String? userName;
+  String? recipeDatabase;
+  String? servingDatabase;
+  bool recipeadded = false;
 
   final fireStorage = FirebaseFirestore.instance;
+  final recipeName = TextEditingController();
+  final serving = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +88,17 @@ class _ScanPageState extends State<ScanPage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.white,
+            onPressed: () {
+              MaterialPageRoute route = MaterialPageRoute(builder: (context) => fetchData());
+              Navigator.push(context, route);
+            },
+            child: Text("View Recipe/Daily Food Intake"),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+          ),
+        ],
       ),
       body:
         Center(
@@ -103,10 +121,32 @@ class _ScanPageState extends State<ScanPage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            TextField(
+              controller: recipeName,
+            decoration:  InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter a recipe name or dailyfoodintake',
+              suffixIcon: IconButton(
+                icon: Icon(Icons.add_reaction_rounded),
+                onPressed:() {
+                  recipeDatabase = recipeName.text.toString();
+                  showDialog(context: context, builder: (context){
+                    return AlertDialog(content: Text('New Recipe added to the database'));
+                  },
+                  );
+                  setState(() => recipeadded = true);
+                  //updateRecipe();
+                },
+              ),
+            ),
+            ),
+
+            Spacer(),
             Text(
-              scanResult == null
-                  ? 'Scan a barcode'
-                  : 'FDC ID = $scanResult',
+              recipeadded == false
+                  ? ''
+                  : 'Now scan products for the recipe',
+              style: Theme.of(context).textTheme.headline6,
             ),
             Text(
               //'$_counter',
@@ -120,20 +160,43 @@ class _ScanPageState extends State<ScanPage> {
                   ? ' '
                   : 'Calories = $counter',
             ),
-            FlatButton(
-              onPressed: updateData,
-              child: Text(
-                  "Get"
+            TextField(
+              controller: serving,
+              decoration:  InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Scan & Enter Servings',
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.add_reaction_rounded),
+                  onPressed:() {
+                    servingDatabase = serving.text.toString();
+                    showDialog(context: context, builder: (context){
+                      return AlertDialog(content: Text('New ingredient added to $recipeDatabase'));
+                    },
+                    );
+                    //setState(() => recipeadded = true);
+                    updateData();
+                  },
+                ),
               ),
-
-            )
+            ),
+            // FlatButton(
+            //   onPressed: updateData,
+            //   child: Text(
+            //       "Get"
+            //   ),
+            //
+            // ),
+            Spacer(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: scanBarcode,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed:
+        recipeadded == false
+        ? null
+        : scanBarcode,
+        label: Text('Scan Barcode'),
+        icon: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
@@ -186,21 +249,17 @@ class _ScanPageState extends State<ScanPage> {
     });
   }
   Future<void> updateData() async {
-    fireStorage.collection("ec463").add(
+    fireStorage.collection("$recipeDatabase").doc("$foodName").set(
         {
-          "Product" : "$foodName",
-          "Calories" : "$counter kcal",
-          "Barcode Number" : "$scanResult"
-        }).then((value){
-      print(value.id);
-    });
+          "Food Name" : "$foodName",
+          "Calories" : "$counter",
+          "Serving" : "$servingDatabase"
+        });
   }
-
-  Future<void> getList() async {
-    fireStorage.collection("ec463").get().then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
-        print(result.data());
-      });
+  Future<void> updateRecipe() async {
+    fireStorage.collection("$recipeDatabase").add(
+        {}).then((value){
+      print(value.id);
     });
   }
 }

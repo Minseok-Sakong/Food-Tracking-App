@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'login demo',
+      title: 'My Recipe Pal',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),

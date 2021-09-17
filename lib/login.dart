@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:test/scan.dart';
 
@@ -15,7 +16,6 @@ class _loginState extends State<login> {
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    setState(() => isloggedIn = true);
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
@@ -26,6 +26,7 @@ class _loginState extends State<login> {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+    setState(() => isloggedIn = true);
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
 
@@ -47,19 +48,32 @@ class _loginState extends State<login> {
               isloggedIn == false
                   ? 'Please google log-in'
                   : 'You are now logged in!',
+              style: Theme.of(context).textTheme.headline6,
             ),
-            FlatButton(
-              color: Colors.grey.withOpacity(0.3),
-              onPressed: signInWithGoogle,
-              child: Text("Google Login"),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                onPrimary: Colors.black,
+                //minimumSize: Size(double.infinity, 50),
+              ),
+              icon: FaIcon(FontAwesomeIcons.google, color:Colors.red),
+              label: Text('Sign Up with Google'),
+              onPressed: !isloggedIn ?
+              signInWithGoogle
+                  :null
             ),
+            // FlatButton(
+            //   color: Colors.grey.withOpacity(0.3),
+            //   onPressed: signInWithGoogle,
+            //   child: Text("Google Login"),
+            // ),
       FlatButton(
         color: Colors.grey.withOpacity(0.3),
         onPressed: isloggedIn ? (){
           MaterialPageRoute route = MaterialPageRoute(builder: (context) => Scan());
           Navigator.push(context, route);
         }: null,
-        child: Text("GO"),
+        child: Text("Proceed"),
       ),
           ],
         ),
