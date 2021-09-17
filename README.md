@@ -10,7 +10,7 @@
 - Store and manage data under Google Firebase
 - Follow agile software development throughout the duration of the project
 
-## DESIGN
+## DESIGN DECISIONS
 ### Front End
 
 - User is prompted with a login screen that uses Gmail authentication to store data in their respective account
