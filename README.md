@@ -21,7 +21,7 @@
 ### Back End
 
 - When a barcode is scanned, its number is stored in a query object and posed to the FDC API
-- The cURL command returns the information and is stored in an object which is then added to that users database
+- The cURL command returns the information and is stored in an object which is then added to that user's database
 - The item is also added to a recipe if the user decides to do so
 
 ## TESTING AND RESULTS
