@@ -22,7 +22,7 @@ class _fetchDataState extends State<fetchData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      title: Text("View Recipe")
+      title: Text("View Recipes")
 
       ),
       body:
