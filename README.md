@@ -17,6 +17,7 @@
 - Once access is granted, the user can select to scan a barcode or view their saved recipes
 - When the scanner successfully scans the item, the user sees its calorie information
 - From there, the user is asked the amount of portions and can either add it to a recipe or scan another item
+- Finally, the user has the option to view their saved recipes, and when clicked, they see the ingredients and calories in that respective recipe
 
 ### Back End
 
