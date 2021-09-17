@@ -26,7 +26,7 @@ class Scan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'My Recipe Pal',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -95,7 +95,7 @@ class _ScanPageState extends State<ScanPage> {
               MaterialPageRoute route = MaterialPageRoute(builder: (context) => fetchData());
               Navigator.push(context, route);
             },
-            child: Text("View Recipe"),
+            child: Text("View Recipe/Daily Food Intake"),
             shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
           ),
         ],
@@ -125,7 +125,7 @@ class _ScanPageState extends State<ScanPage> {
               controller: recipeName,
             decoration:  InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter a recipe name',
+                hintText: 'Enter a recipe name & dailyfoodintake',
               suffixIcon: IconButton(
                 icon: Icon(Icons.add_reaction_rounded),
                 onPressed:() {
