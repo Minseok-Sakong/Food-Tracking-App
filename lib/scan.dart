@@ -60,7 +60,7 @@ class _ScanPageState extends State<ScanPage> {
 
   @override
   Widget build(BuildContext context) {
-    
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -95,7 +95,8 @@ class _ScanPageState extends State<ScanPage> {
                 onPressed:() {
                   recipeDatabase = recipeName.text.toString();
                   showDialog(context: context, builder: (context){
-                    return AlertDialog(content: Text('New Recipe has been added to the database'));
+
+                    return AlertDialog(content: Text('New Recipe has beed added'));
                   },
                   );
                   setState(() => recipeadded = true);
@@ -143,13 +144,7 @@ class _ScanPageState extends State<ScanPage> {
                 ),
               ),
             ),
-            // FlatButton(
-            //   onPressed: updateData,
-            //   child: Text(
-            //       "Get"
-            //   ),
-            //
-            // ),
+
             Spacer(),
           ],
         ),
@@ -204,6 +199,7 @@ class _ScanPageState extends State<ScanPage> {
     counter = test["foods"][0]["foodNutrients"][3]["value"].toString();
     foodName = test["foods"][0]["description"];
     setState(() {
+
     });
   }
   Future<void> updateData() async {
