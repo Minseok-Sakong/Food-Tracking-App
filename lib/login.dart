@@ -36,7 +36,7 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Google Login"),
+        title: Text("Gmail Login"),
       ),
       body:
 

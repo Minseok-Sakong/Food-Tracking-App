@@ -28,6 +28,7 @@ class Scan extends StatelessWidget {
     return MaterialApp(
       title: 'My Recipe Pal',
       theme: ThemeData(
+
         primarySwatch: Colors.blue,
       ),
       home: ScanPage(title: 'My Recipe Pal'),
@@ -37,6 +38,7 @@ class Scan extends StatelessWidget {
 
 class ScanPage extends StatefulWidget {
   ScanPage({Key? key, required this.title}) : super(key: key);
+
   final String title;
 
   @override
@@ -78,6 +80,7 @@ class _ScanPageState extends State<ScanPage> {
       ),
       body:
         Center(
+
         child: Column(
 
           mainAxisAlignment: MainAxisAlignment.center,
@@ -92,6 +95,7 @@ class _ScanPageState extends State<ScanPage> {
                 onPressed:() {
                   recipeDatabase = recipeName.text.toString();
                   showDialog(context: context, builder: (context){
+
                     return AlertDialog(content: Text('New Recipe has beed added'));
                   },
                   );
